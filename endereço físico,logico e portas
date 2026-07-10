@@ -117,3 +117,14 @@ Porta: 80 (HTTP)
 > - 🖥️ **MAC = Quem é a placa de rede?**
 > - 🌍 **IP = Onde está o computador?**
 > - 🚪 **Porta = Qual programa vai receber a conexão?**
+
+----------------------------------------------------------------------
+                    COMO O IP FOI ATRIBUÍDO
+
+                 DHCP              ESTÁTICO
+
+PRIVADO      192.168.0.15      192.168.0.15
+             (roteador deu)    (você definiu)
+
+PÚBLICO      177.54.83.120     177.54.83.120
+             (operadora deu)   (operadora reservou)
