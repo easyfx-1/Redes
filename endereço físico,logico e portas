@@ -119,7 +119,9 @@ Porta: 80 (HTTP)
 > - 🚪 **Porta = Qual programa vai receber a conexão?**
 
 ----------------------------------------------------------------------
-COMO O IP FOI ATRIBUÍDO: DHCP ou Estático
+                      DUAS CLASSIFICAÇÕES 
+
+OMO O IP FOI ATRIBUÍDO: DHCP ou Estático
 ONDE O IP É USADO: IP Privado ou IP Público
 
                  DHCP              ESTÁTICO
