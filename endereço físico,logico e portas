@@ -1,0 +1,119 @@
+# Endereço Físico (MAC), Endereço Lógico (IP) e Portas
+
+Toda comunicação em uma rede depende de **três elementos principais**: **MAC Address**, **IP Address** e **Portas**.
+
+## 📌 Endereço Físico (MAC Address)
+
+É o identificador da **placa de rede**.
+
+- Atua na **camada 2 (Enlace)** do modelo OSI.
+- Utilizado para comunicação dentro da **rede local (LAN)**.
+- Geralmente é gravado pelo fabricante.
+- Formato hexadecimal (48 bits).
+
+**Exemplo:**
+```text
+00:1A:2B:3C:4D:5E
+```
+
+> **Observação:** Apesar de vir de fábrica, o MAC pode ser alterado temporariamente (**MAC Spoofing**) utilizando ferramentas como `macchanger` no Linux/Kali.
+
+---
+
+## 🌐 Endereço Lógico (IP Address)
+
+É o endereço que identifica um dispositivo na rede.
+
+- Atua na **camada 3 (Rede)**.
+- Permite localizar dispositivos em redes locais e na Internet.
+- Pode ser alterado conforme a rede ou configuração.
+
+**Exemplo IPv4:**
+
+```text
+192.168.0.102
+```
+
+**Exemplo IPv6:**
+
+```text
+2001:db8::1
+```
+
+O IP pode ser atribuído:
+
+- Automaticamente (DHCP)
+- Manualmente (IP estático)
+
+> O IP pode mudar sempre que você trocar de rede ou renovar o DHCP.
+
+---
+
+## 🔌 Portas
+
+As portas identificam **qual serviço ou aplicação** receberá os dados.
+
+- Existem **65.535 portas TCP** e **65.535 portas UDP**.
+- Permitem que vários serviços utilizem o mesmo endereço IP simultaneamente.
+
+Exemplos:
+
+| Porta | Serviço |
+|--------|----------|
+| 22 | SSH |
+| 53 | DNS |
+| 80 | HTTP |
+| 443 | HTTPS |
+
+Durante uma conexão:
+
+```text
+Cliente
+IP: 192.168.0.102
+Porta: 50234 (porta temporária)
+
+           │
+
+Servidor
+IP: 192.168.0.200
+Porta: 80 (HTTP)
+```
+
+A porta **50234** foi criada automaticamente pelo sistema operacional apenas para essa conexão.
+
+---
+
+# Resumo
+
+| Elemento | Função | Pode ser alterado? |
+|----------|---------|--------------------|
+| **MAC Address** | Identifica a placa de rede na rede local | Sim (MAC Spoofing) |
+| **IP Address** | Identifica o dispositivo na rede | Sim |
+| **Porta** | Identifica o serviço que receberá os dados | Sim |
+
+---
+
+## Exemplo Completo
+
+```text
+Cliente
+MAC: A4:5E:60:B8:C1:AF
+IP : 192.168.0.102
+Porta: 50234
+        │
+        ▼
+Servidor
+MAC: 00:0C:29:76:43:E1
+IP : 192.168.0.200
+Porta: 80 (HTTP)
+```
+
+- **MAC** → identifica a placa de rede.
+- **IP** → identifica o dispositivo na rede.
+- **Porta** → identifica o serviço em execução.
+
+> **Forma fácil de memorizar:**
+>
+> - 🖥️ **MAC = Quem é a placa de rede?**
+> - 🌍 **IP = Onde está o computador?**
+> - 🚪 **Porta = Qual programa vai receber a conexão?**
