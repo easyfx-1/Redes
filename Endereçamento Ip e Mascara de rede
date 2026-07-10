@@ -1,0 +1,194 @@
+# Endereçamento IP e Máscara de Rede
+
+## O que é um endereço IP?
+
+O **IP (Internet Protocol)** é o endereço lógico de um dispositivo na rede.
+
+Exemplo:
+
+```text
+192.168.0.102
+```
+
+Um endereço IPv4 possui **4 octetos**, separados por ponto.
+
+```text
+192 . 168 . 0 . 102
+ ↑     ↑     ↑     ↑
+1º    2º    3º    4º Octeto
+```
+
+Cada octeto possui **8 bits** e pode variar de:
+
+```text
+0 até 255
+```
+
+---
+
+# Máscara de Rede
+
+A máscara informa **qual parte do IP representa a rede** e **qual parte representa o host (dispositivo)**.
+
+Exemplo:
+
+```text
+IP:      192.168.0.102
+Máscara: 255.255.255.0
+```
+
+Representação:
+
+```text
+192.168.0.102
+───────── ───
+ Rede     Host
+```
+
+Neste caso:
+
+- Rede → `192.168.0`
+- Host → `102`
+
+Todos os dispositivos que pertencem à rede começam com:
+
+```text
+192.168.0.X
+```
+
+---
+
+# Quantidade de Hosts
+
+A quantidade de hosts depende da máscara de rede.
+
+## 255.255.255.0 (/24)
+
+```text
+Rede Rede Rede Host
+```
+
+Hosts disponíveis:
+
+```text
+192.168.0.1
+
+até
+
+192.168.0.254
+```
+
+Total:
+
+```text
+254 Hosts
+```
+
+> `.0` = Endereço da rede  
+> `.255` = Broadcast
+
+---
+
+## 255.255.0.0 (/16)
+
+```text
+Rede Rede Host Host
+```
+
+Agora dois octetos pertencem aos hosts.
+
+Quantidade:
+
+```text
+65.534 Hosts
+```
+
+Exemplo:
+
+```text
+192.168.0.1
+
+192.168.1.20
+
+192.168.25.100
+
+192.168.200.50
+```
+
+Todos pertencem à mesma rede.
+
+---
+
+# Cálculo dos Hosts
+
+Fórmula:
+
+```text
+Hosts = 2^(Bits de Host) - 2
+```
+
+Exemplos:
+
+| Máscara | CIDR | Bits Host | Hosts |
+|---------|------|----------:|------:|
+| 255.255.255.0 | /24 | 8 | 254 |
+| 255.255.255.128 | /25 | 7 | 126 |
+| 255.255.255.192 | /26 | 6 | 62 |
+| 255.255.255.224 | /27 | 5 | 30 |
+| 255.255.255.240 | /28 | 4 | 14 |
+| 255.255.255.248 | /29 | 3 | 6 |
+| 255.255.255.252 | /30 | 2 | 2 |
+| 255.255.0.0 | /16 | 16 | 65.534 |
+
+---
+
+# Classificações de IP
+
+## IP Privado
+
+Utilizado apenas dentro da rede local.
+
+Faixas:
+
+```text
+10.0.0.0/8
+
+172.16.0.0 - 172.31.255.255
+
+192.168.0.0/16
+```
+
+Não são acessíveis diretamente pela Internet.
+
+---
+
+## IP Público
+
+É o endereço fornecido pela operadora para acesso à Internet.
+
+Exemplo:
+
+```text
+177.54.83.120
+```
+
+Pode ser:
+
+- Dinâmico (DHCP)
+- Estático
+
+---
+
+# Resumo
+
+| Conceito | Descrição |
+|----------|-----------|
+| **IP** | Endereço lógico de um dispositivo. |
+| **Octeto** | Cada grupo de números do IP (0–255). |
+| **Máscara** | Define a parte da rede e do host. |
+| **Host** | Dispositivo conectado à rede. |
+| **Rede** | Conjunto de dispositivos que compartilham a mesma identificação de rede. |
+| **/24** | Até 254 hosts. |
+| **/16** | Até 65.534 hosts. |
+
+> **Dica:** Quanto **maior** a parte destinada aos **hosts**, maior será a quantidade de dispositivos que a rede pode suportar.
