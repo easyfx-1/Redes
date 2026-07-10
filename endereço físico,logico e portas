@@ -121,7 +121,7 @@ Porta: 80 (HTTP)
 ----------------------------------------------------------------------
                       DUAS CLASSIFICAÇÕES 
 
-OMO O IP FOI ATRIBUÍDO: DHCP ou Estático
+COMO O IP FOI ATRIBUÍDO: DHCP/automaticamente ou Estático/manualmente
 ONDE O IP É USADO: IP Privado ou IP Público
 
                  DHCP              ESTÁTICO
