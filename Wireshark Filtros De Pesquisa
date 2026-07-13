@@ -1,0 +1,493 @@
+# 🔎 Pesquisas e Filtros no Wireshark
+
+O Wireshark permite analisar o tráfego de rede através dos **Display Filters (Filtros de Exibição)**. Eles são utilizados para encontrar informações específicas dentro de uma captura de pacotes, facilitando a análise de redes, troubleshooting e investigação de segurança.
+
+Os filtros são aplicados na barra superior:
+
+```
+Apply a display filter...
+```
+
+Após escrever o filtro, pressione:
+
+```
+Enter
+```
+
+---
+
+# 🌐 Filtros por Protocolo
+
+## IPv4
+
+```wireshark
+ip
+```
+
+Exibe somente pacotes que utilizam IPv4.
+
+---
+
+## IPv6
+
+```wireshark
+ipv6
+```
+
+Exibe somente pacotes IPv6.
+
+---
+
+## TCP
+
+```wireshark
+tcp
+```
+
+Mostra tráfego baseado no protocolo TCP.
+
+---
+
+## UDP
+
+```wireshark
+udp
+```
+
+Mostra tráfego baseado no protocolo UDP.
+
+---
+
+## DNS
+
+```wireshark
+dns
+```
+
+Mostra consultas e respostas DNS.
+
+---
+
+## HTTP
+
+```wireshark
+http
+```
+
+Mostra tráfego HTTP.
+
+---
+
+## TLS/HTTPS
+
+```wireshark
+tls
+```
+
+Mostra conexões criptografadas utilizando TLS.
+
+---
+
+# 🖥️ Filtros por Endereço IP
+
+## Procurar um IP específico
+
+```wireshark
+ip.addr == 192.168.1.10
+```
+
+Mostra todo tráfego envolvendo esse endereço IP.
+
+---
+
+## Filtrar IP de origem
+
+```wireshark
+ip.src == 192.168.1.10
+```
+
+Mostra somente pacotes enviados pelo IP informado.
+
+Exemplo:
+
+```
+192.168.1.10 → Servidor
+```
+
+---
+
+## Filtrar IP de destino
+
+```wireshark
+ip.dst == 192.168.1.10
+```
+
+Mostra somente pacotes enviados para o IP informado.
+
+Exemplo:
+
+```
+Cliente → 192.168.1.10
+```
+
+---
+
+# 🌎 Filtrar uma Rede Completa
+
+Exemplo:
+
+```wireshark
+ip.addr == 192.168.1.0/24
+```
+
+Analisa todos os dispositivos dentro da rede:
+
+```
+192.168.1.1
+192.168.1.2
+192.168.1.50
+```
+
+---
+
+# 🚪 Filtros por Porta
+
+## HTTP
+
+```wireshark
+tcp.port == 80
+```
+
+---
+
+## HTTPS
+
+```wireshark
+tcp.port == 443
+```
+
+---
+
+## DNS
+
+```wireshark
+udp.port == 53
+```
+
+---
+
+## SSH
+
+```wireshark
+tcp.port == 22
+```
+
+---
+
+# 🔗 Combinando Filtros
+
+O Wireshark permite combinar pesquisas utilizando operadores.
+
+## AND (E)
+
+Representado por:
+
+```wireshark
+&&
+```
+
+Exemplo:
+
+Encontrar HTTP de um determinado IP:
+
+```wireshark
+ip.addr == 192.168.1.10 && http
+```
+
+---
+
+## OR (OU)
+
+Representado por:
+
+```wireshark
+||
+```
+
+Exemplo:
+
+Mostrar DNS ou HTTP:
+
+```wireshark
+dns || http
+```
+
+---
+
+## NOT (Negação)
+
+Representado por:
+
+```wireshark
+!
+```
+
+Exemplo:
+
+Excluir um IP:
+
+```wireshark
+!(ip.addr == 192.168.1.10)
+```
+
+---
+
+# 🔍 Procurando Texto Dentro dos Pacotes
+
+Para procurar informações dentro da captura:
+
+Atalho:
+
+```
+CTRL + F
+```
+
+É possível pesquisar por:
+
+- Texto
+- Campos dos protocolos
+- Conteúdo hexadecimal
+
+Exemplos:
+
+```text
+password
+```
+
+```text
+username
+```
+
+```text
+admin
+```
+
+Útil para encontrar informações transmitidas em texto claro.
+
+---
+
+# 🌐 Analisando Requisições HTTP
+
+## Todas as requisições HTTP
+
+```wireshark
+http.request
+```
+
+---
+
+## Requisições GET
+
+```wireshark
+http.request.method == "GET"
+```
+
+Usado para identificar acessos e downloads.
+
+---
+
+## Requisições POST
+
+```wireshark
+http.request.method == "POST"
+```
+
+Importante em investigações porque pode indicar:
+
+- envio de credenciais;
+- envio de arquivos;
+- comunicação com servidores externos.
+
+---
+
+# 🔐 Análise de Conexões TCP
+
+## Encontrar início de conexões TCP
+
+```wireshark
+tcp.flags.syn == 1
+```
+
+Utilizado para identificar:
+
+- novas conexões;
+- tentativas de conexão;
+- possíveis port scans.
+
+---
+
+## Encontrar conexões resetadas
+
+```wireshark
+tcp.flags.reset == 1
+```
+
+Mostra conexões encerradas de forma forçada.
+
+---
+
+## Encontrar retransmissões TCP
+
+```wireshark
+tcp.analysis.retransmission
+```
+
+Ajuda a identificar problemas de rede ou comportamento anormal.
+
+---
+
+# 📂 Seguir uma Comunicação Completa
+
+Quando encontrar um pacote interessante:
+
+```
+Botão direito no pacote
+        ↓
+Follow
+        ↓
+TCP Stream
+```
+
+O Wireshark exibirá toda a conversa entre os dispositivos.
+
+Utilizado para:
+
+- investigação de ataques;
+- análise de malware;
+- entendimento de comunicações suspeitas.
+
+---
+
+# 📊 Descobrindo Dispositivos na Captura
+
+Menu:
+
+```
+Statistics
+      ↓
+Endpoints
+      ↓
+IPv4
+```
+
+Mostra:
+
+- endereços IP encontrados;
+- quantidade de pacotes;
+- bytes enviados;
+- bytes recebidos.
+
+Ajuda a identificar:
+
+- clientes;
+- servidores;
+- possíveis hosts suspeitos.
+
+---
+
+# 🕵️ Processo de Investigação com Wireshark
+
+Uma análise normalmente segue estes passos:
+
+## 1. Visualizar todo tráfego IPv4
+
+```wireshark
+ip
+```
+
+---
+
+## 2. Identificar um IP interessante
+
+```wireshark
+ip.addr == X.X.X.X
+```
+
+---
+
+## 3. Ver protocolos utilizados pelo host
+
+```wireshark
+ip.addr == X.X.X.X && tcp
+```
+
+---
+
+## 4. Analisar a comunicação
+
+```
+Follow TCP Stream
+```
+
+---
+
+# ⚔️ Filtros Mais Utilizados em Segurança
+
+Identificar tráfego IPv4:
+
+```wireshark
+ip
+```
+
+Analisar DNS:
+
+```wireshark
+dns
+```
+
+Investigar envio de dados:
+
+```wireshark
+http.request.method == "POST"
+```
+
+Identificar novas conexões:
+
+```wireshark
+tcp.flags.syn == 1
+```
+
+Encontrar retransmissões:
+
+```wireshark
+tcp.analysis.retransmission
+```
+
+Investigar um host:
+
+```wireshark
+ip.addr == X.X.X.X
+```
+
+---
+
+# 📌 Conclusão
+
+Os filtros do Wireshark são fundamentais para transformar uma captura contendo milhares de pacotes em uma análise objetiva.
+
+Com eles é possível:
+
+- localizar dispositivos;
+- identificar protocolos;
+- analisar conexões;
+- investigar ataques;
+- encontrar comportamentos suspeitos;
+- entender a comunicação entre máquinas.
+
+O domínio dos filtros do Wireshark é uma habilidade essencial para profissionais de:
+
+- Blue Team;
+- SOC Analyst;
+- Network Security;
+- Threat Hunting;
+- Resposta a Incidentes.
