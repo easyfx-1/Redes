@@ -1,0 +1,607 @@
+# Modelo TCP/IP e Análise de Pacotes no Wireshark
+
+## Introdução
+
+O modelo TCP/IP é o conjunto de protocolos utilizado para comunicação em redes modernas, incluindo a Internet.
+
+Quando um dispositivo envia dados para outro, a informação passa por diferentes camadas, onde cada camada adiciona suas próprias informações de controle através de cabeçalhos (**headers**).
+
+Esse processo é chamado de:
+
+- **Encapsulamento** → quando os dados recebem cabeçalhos ao serem enviados.
+- **Desencapsulamento** → quando os cabeçalhos são removidos ao serem recebidos.
+
+No Wireshark, podemos observar essas camadas através da análise dos pacotes capturados.
+
+---
+
+# Estrutura de um pacote TCP/IP
+
+A comunicação segue normalmente esta ordem:
+
+
+Camada de Aplicação
+|
+↓
+Camada de Transporte
+|
+↓
+Camada de Internet
+|
+↓
+Camada de Acesso à Rede
+
+
+No Wireshark, a visualização geralmente aparece assim:
+
+
+Frame
+|
+└── Ethernet II
+|
+└── IPv4 / IPv6
+|
+└── TCP / UDP
+|
+└── Dados da aplicação
+
+
+---
+
+# 1. Frame (Camada de Acesso à Rede)
+
+## O que é?
+
+O Frame representa a unidade completa capturada pela placa de rede.
+
+Ele contém todas as informações transmitidas na camada física e enlace.
+
+No Wireshark aparece como:
+
+
+Frame 2910: Packet, 1292 bytes on wire
+
+
+Informações importantes:
+
+- Tamanho total do pacote.
+- Quantidade de bits transmitidos.
+- Interface utilizada na captura.
+- Número do pacote capturado.
+
+Exemplo:
+
+
+Packet: 1292 bytes
+Bits: 10336 bits
+Interface: eth0
+
+
+O Frame é o pacote completo antes de ser separado em suas camadas.
+
+---
+
+# 2. Ethernet II (Camada de Enlace)
+
+## O que é?
+
+O Ethernet II é responsável pela comunicação dentro da rede local (LAN).
+
+Ele utiliza endereços físicos chamados:
+
+
+MAC Address
+
+
+No Wireshark:
+
+
+Ethernet II
+Src: ZyxelCommuni_83:ec:a8
+Dst: GIGABYTE_TECH_1b:a2:89
+
+
+Temos:
+
+## Source MAC Address
+
+Origem do dispositivo que enviou o frame.
+
+Exemplo:
+
+
+Src:
+14:33:75:83:ec:a8
+
+
+Normalmente é o MAC da sua placa de rede.
+
+---
+
+## Destination MAC Address
+
+Destino dentro da rede local.
+
+Exemplo:
+
+
+Dst:
+30:56:0f:1b:a2:89
+
+
+Pode ser:
+
+- Outro computador.
+- Roteador.
+- Switch.
+
+---
+
+# 3. Camada de Internet - IP
+
+A camada IP é responsável pelo endereçamento lógico e roteamento entre redes diferentes.
+
+Existem duas versões principais:
+
+- IPv4
+- IPv6
+
+---
+
+# IPv4
+
+O IPv4 utiliza endereços de 32 bits.
+
+Exemplo:
+
+
+192.168.1.10
+
+
+No Wireshark aparece:
+
+
+Internet Protocol Version 4
+
+
+Exemplo:
+
+
+Internet Protocol Version 4
+
+Src: 192.168.1.50
+Dst: 142.250.78.14
+
+
+---
+
+## Campos importantes do Header IPv4
+
+### Version
+
+Indica a versão utilizada.
+
+
+Version: 4
+
+
+---
+
+### Header Length (IHL)
+
+Define o tamanho do cabeçalho IP.
+
+Normalmente:
+
+
+20 bytes
+
+
+---
+
+### Total Length
+
+Tamanho total do pacote:
+
+
+Header + Dados
+
+
+Exemplo:
+
+
+Total Length: 64 bytes
+
+
+O limite máximo do IPv4 é:
+
+
+65535 bytes
+
+
+Caso ultrapasse o limite permitido pela rede Ethernet:
+
+
+1500 bytes (MTU)
+
+
+o pacote pode sofrer fragmentação.
+
+---
+
+### Identification
+
+Identifica fragmentos de um mesmo pacote.
+
+Caso não exista fragmentação:
+
+
+Identification: 0
+
+
+---
+
+### Flags
+
+Controlam a fragmentação.
+
+Possíveis valores:
+
+
+DF - Don't Fragment
+
+MF - More Fragment
+
+
+Exemplo:
+
+
+DF = 1
+
+
+Significa:
+
+
+Não fragmentar este pacote.
+
+
+---
+
+### TTL (Time To Live)
+
+Controla o tempo de vida do pacote.
+
+Cada roteador reduz o valor em 1.
+
+Exemplo:
+
+
+TTL: 64
+
+
+Valores comuns:
+
+Linux:
+
+
+TTL 64
+
+
+Windows:
+
+
+TTL 128
+
+
+Quando chega a zero:
+
+
+O pacote é descartado.
+
+
+---
+
+### Protocol
+
+Indica qual protocolo será encontrado dentro do pacote IP.
+
+Exemplos:
+
+
+Protocol: TCP (6)
+
+Protocol: UDP (17)
+
+Protocol: ICMP (1)
+
+
+Exemplo:
+
+
+IPv4
+|
+└── Protocol: UDP
+|
+└── Dados
+
+
+---
+
+# IPv6
+
+O IPv6 utiliza endereços de 128 bits.
+
+Exemplo:
+
+
+2804:98c:6fff::c
+
+
+No Wireshark:
+
+
+Internet Protocol Version 6
+
+
+Exemplo:
+
+
+Internet Protocol Version 6
+
+Src:
+2804:98c:6fff::c
+
+Dst:
+2804:98c:7114:9d00:4fb:e5ca:388b:49a
+
+
+---
+
+# Campos importantes do Header IPv6
+
+## Version
+
+Indica a versão:
+
+
+Version: 6
+
+
+---
+
+## Traffic Class
+
+Substitui o antigo Type of Service do IPv4.
+
+Responsável por classificação e prioridade do tráfego.
+
+---
+
+## Flow Label
+
+Identifica fluxos específicos de comunicação.
+
+Utilizado para melhorar tratamento de determinados tipos de tráfego.
+
+---
+
+## Payload Length
+
+Define o tamanho dos dados após o cabeçalho IPv6.
+
+Exemplo:
+
+
+Payload Length: 1238
+
+
+---
+
+## Next Header
+
+Equivalente ao campo Protocol do IPv4.
+
+Indica o próximo protocolo.
+
+Exemplo:
+
+
+Next Header: UDP (17)
+
+
+Significa:
+
+
+IPv6
+|
+└── UDP
+|
+└── Dados
+
+
+---
+
+## Hop Limit
+
+Equivalente ao TTL do IPv4.
+
+Cada roteador reduz esse valor em 1.
+
+Exemplo:
+
+
+Hop Limit: 123
+
+
+---
+
+# 4. Camada de Transporte
+
+Após o IP, encontramos os protocolos responsáveis pela comunicação entre aplicações.
+
+Os principais são:
+
+- TCP
+- UDP
+
+---
+
+# UDP (User Datagram Protocol)
+
+No exemplo analisado:
+
+
+User Datagram Protocol
+Src Port: 443
+Dst Port: 58511
+
+
+O UDP é:
+
+- Mais rápido.
+- Não garante entrega.
+- Não possui confirmação.
+- Muito utilizado em:
+    - DNS
+    - Streaming
+    - Jogos online
+    - VoIP
+
+Estrutura:
+
+
+IPv6
+|
+└── UDP
+|
+├── Porta origem
+├── Porta destino
+|
+└── Dados
+
+
+---
+
+# TCP (Transmission Control Protocol)
+
+O TCP é orientado à conexão.
+
+Características:
+
+- Confirma entrega.
+- Controla erros.
+- Reenvia pacotes perdidos.
+- Garante ordem dos dados.
+
+Muito usado em:
+
+- HTTP/HTTPS
+- SSH
+- FTP
+
+Estrutura:
+
+
+IPv4/IPv6
+|
+└── TCP
+|
+├── Porta origem
+├── Porta destino
+├── Flags
+└── Controle da conexão
+
+
+---
+
+# Exemplo completo analisado no Wireshark
+
+Pacote:
+
+
+Frame
+|
+└── Ethernet II
+|
+└── IPv6
+|
+└── UDP
+|
+└── Dados
+
+
+Detalhando:
+
+
+Ethernet II
+MAC origem
+MAC destino
+
+IPv6
+IP origem
+IP destino
+Next Header: UDP
+
+UDP
+Porta origem: 443
+Porta destino: 58511
+
+Data
+Conteúdo transmitido
+
+
+---
+
+# Comparação IPv4 x IPv6
+
+| Função | IPv4 | IPv6 |
+|---|---|---|
+| Versão | Version 4 | Version 6 |
+| Endereço | 32 bits | 128 bits |
+| TTL | TTL | Hop Limit |
+| Protocolo seguinte | Protocol | Next Header |
+| Tamanho do endereço | Menor | Maior |
+| Fragmentação | No header | Tratada por extensões |
+
+---
+
+# Resumo do Encapsulamento
+
+Quando um dado é enviado:
+
+
+Aplicação
+↓
+Dados
+
+Transporte
+↓
+TCP/UDP + Dados
+
+Internet
+↓
+IP + TCP/UDP + Dados
+
+Rede
+↓
+Ethernet + IP + TCP/UDP + Dados
+
+
+O Wireshark permite visualizar exatamente esse processo, mostrando como cada camada adiciona informações necessárias para que a comunicação aconteça.
+
+Esse formato já fica com cara de documentação de analista de redes / Blue Team, e encaixa bem em um diretório como:
+
+Redes/
+│
+├── TCP-IP/
+│   └── encapsulamento.md
+│
+├── Wireshark/
+│   └── analise_pacotes.md
+│
+└── IPv4-IPv6/
+    └── comparacao.md
+Chats com anexos pausados
+Você já usou todas as suas mensagens com o Instant até 22:32. Assine para continuar usando arquivos e imagens aqui ou comece um novo chat para continuar com um modelo de qualidade inferior.
+Novo chat
+Aproveite a promoção gratuita
