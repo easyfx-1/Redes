@@ -192,3 +192,35 @@ Pode ser:
 | **/16** | Até 65.534 hosts. |
 
 > **Dica:** Quanto **maior** a parte destinada aos **hosts**, maior será a quantidade de dispositivos que a rede pode suportar.
+
+O que é Rede?
+
+A rede é o grupo ao qual o dispositivo pertence.
+
+Pense como um condomínio.
+
+Condomínio Jardim das Flores
+
+Todos que moram ali pertencem ao mesmo condomínio.
+
+Em redes acontece a mesma coisa.
+
+Exemplo:
+
+192.168.0
+
+Essa é a rede.
+
+Todos os dispositivos que começam com:
+
+192.168.0.X
+
+pertencem à mesma rede.
+
+O que é Host?
+
+O host é o dispositivo dentro da rede.
+
+Exemplo:
+
+192.168.0.102
