@@ -1,0 +1,45 @@
+# Protocolos de Rede
+
+| Protocolo | Função |
+|-----------|---------|
+| **TCP** | Comunicação confiável (3-Way Handshake, garante entrega dos dados). |
+| **UDP** | Comunicação rápida, sem confirmação de entrega. |
+| **IP** | Endereça e encaminha pacotes entre redes. |
+| **ICMP** | Diagnóstico de rede (Ping, Traceroute, mensagens de erro). |
+| **ARP** | Descobre o endereço MAC de um IP na rede local. |
+| **DNS** | Converte nomes de domínio em endereços IP. |
+| **DHCP** | Distribui IPs automaticamente aos dispositivos da rede. |
+| **HTTP** | Comunicação entre navegador e servidor Web (sem criptografia). |
+| **HTTPS** | HTTP protegido por TLS/SSL (criptografado). |
+| **FTP** | Transferência de arquivos (sem criptografia). |
+| **SFTP** | Transferência de arquivos sobre SSH (criptografado). |
+| **SSH** | Acesso remoto seguro a sistemas Linux/Unix. |
+| **Telnet** | Acesso remoto sem criptografia (obsoleto). |
+| **SMTP** | Envio de e-mails. |
+| **POP3** | Baixa os e-mails do servidor para o cliente. |
+| **IMAP** | Gerencia e sincroniza e-mails diretamente no servidor. |
+| **SNMP** | Monitoramento e gerenciamento de equipamentos de rede. |
+| **NTP** | Sincroniza data e hora entre dispositivos. |
+| **SMB** | Compartilhamento de arquivos e impressoras (Windows). |
+| **LDAP** | Serviço de diretório (usuários, grupos e autenticação). |
+| **RDP** | Acesso remoto à área de trabalho do Windows. |
+| **TLS/SSL** | Criptografa a comunicação entre cliente e servidor. |
+
+---
+
+## Resumo
+
+- **TCP** → Confiabilidade.
+- **UDP** → Velocidade.
+- **IP** → Endereçamento.
+- **ARP** → IP → MAC.
+- **ICMP** → Diagnóstico.
+- **DNS** → Nome → IP.
+- **DHCP** → Entrega IP automaticamente.
+- **HTTP/HTTPS** → Navegação Web.
+- **SSH** → Administração remota segura.
+- **FTP/SFTP** → Transferência de arquivos.
+- **SMTP/POP3/IMAP** → E-mail.
+- **NTP** → Sincronização de horário.
+- **SMB** → Compartilhamento Windows.
+```
